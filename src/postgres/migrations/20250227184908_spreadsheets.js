@@ -5,6 +5,11 @@
 export async function up(knex) {
     return knex.schema.createTable("spreadsheets", (table) => {
         table.string("spreadsheet_id").primary();
+        table.string("spreadsheet_name").nullable();
+        table.string("sheet_name").nullable();
+        table.boolean("is_active").defaultTo(true);
+        table.timestamps(true, true);
+
     });
 }
 
