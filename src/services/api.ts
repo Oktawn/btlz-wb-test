@@ -9,10 +9,12 @@ export const apiWB = axios.create({
   }
 });
 
+const credentials = JSON.parse(Buffer.from(env.GOOGLE_CREDENTIALS, "hex").toString());
+
 export const apiGoogle = new google.auth.GoogleAuth({
   scopes: ["https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive",
     "https://www.googleapis.com/auth/drive.file"
   ],
-  credentials: JSON.parse(Buffer.from(env.GOOGLE_CREDENTIALS, "hex").toString())
+  credentials: credentials
 })

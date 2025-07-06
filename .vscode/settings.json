@@ -10,5 +10,17 @@
     "[json]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
-    "prettier.requireConfig": true
+    "prettier.requireConfig": true,
+    "sqltools.connections": [
+        {
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 27015,
+            "driver": "PostgreSQL",
+            "name": "wb",
+            "database": "postgres",
+            "username": "postgres",
+            "password": "postgres"
+        }
+    ]
 }

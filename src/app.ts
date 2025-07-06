@@ -9,7 +9,6 @@ console.log("All migrations and seeds have been run");
 async function main() {
   const scheduleService = new ScheduleService();
   try {
-    console.log("Starting schedules...");
     scheduleService.startSchedules();
   } catch (error) {
     console.error("Error during initialization:", error);
