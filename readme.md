@@ -1,54 +1,63 @@
 # Шаблон для выполнения тестового задания
 
 ## Описание
-Шаблон подготовлен для того, чтобы попробовать сократить трудоемкость выполнения тестового задания.
+Система автоматического мониторинга тарифов Wildberries с сохранением данных в базу данных PostgreSQL и автоматическим обновлением Google Sheets.
+## Структура проекта
+```
+src/
+├── services/
+│   ├── schedule.service.ts    # Планировщик задач с очередью
+│   ├── wb.service.ts          # Интеграция с API Wildberries
+│   ├── sheets.service.ts      # Работа с Google Sheets
+│   └── db.service.ts          # Операции с базой данных
+├── config/
+│   ├── env/env.ts            # Конфигурация окружения
+│   └── knex/knexfile.ts      # Настройки базы данных
+└── app.ts                    # Точка входа приложения
+```
 
-В шаблоне настоены контейнеры для `postgres` и приложения на `nodejs`.  
-Для взаимодействия с БД используется `knex.js`.  
-В контейнере `app` используется `build` для приложения на `ts`, но можно использовать и `js`.
+## Настройка
 
-Шаблон не является обязательным!\
-Можно использовать как есть или изменять на свой вкус.
+### 1. Переменные окружения
+Создайте `.env` файл:
+```env
+POSTGRES_PORT=27015
+POSTGRES_DB=postgres
+POSTGRES_USER=postgres
+POSTGRES_PASSWORD=postgres
 
-Все настройки можно найти в файлах:
-- compose.yaml
-- dockerfile
-- package.json
-- tsconfig.json
-- src/config/env/env.ts
-- src/config/knex/knexfile.ts
+APP_PORT=5000
+
+# Wildberries API credentials
+WB_TOKEN=your_wildberries_api_key
+WB_API_URL=https://common-api.wildberries.ru/api/v1/tariffs/box
+
+# Google API credentials
+GOOGLE_CREDENTIALS=your_google_credentials_hex
+GOOGLE_API_KEY=your_google_api_key
+```
+
 
 ## Команды:
 
-Запуск базы данных:
+
+Запуск  самого приложения:
 ```bash
-docker compose up -d --build postgres
+docker compose build
+docker compose up 
 ```
 
-Для выполнения миграций и сидов не из контейнера:
+## Логи
+Логи приложения:
 ```bash
-npm run knex:dev migrate latest
-```
+app       | Hourly task queued at: Sun, 06 Jul 2025 09:48:00 GMT
+app       | Hourly task started at: Sun, 06 Jul 2025 09:48:00 GMT
+app       | Hourly task completed at: Sun, 06 Jul 2025 09:48:01 GMT
+app       | --------------------------
+app       | Daily task queued at: Sun, 06 Jul 2025 09:50:00 GMT
+app       | Daily task started at: Sun, 06 Jul 2025 09:50:00 GMT
+app       | Spreadsheet ... is now public.
+app       | Daily task completed at: Sun, 06 Jul 2025 09:50:04 GMT
+app       | --------------------------
 
-```bash
-npm run knex:dev seed run
 ```
-Также можно использовать и остальные команды (`migrate make <name>`,`migrate up`, `migrate down` и т.д.)
-
-Для запуска приложения в режиме разработки:
-```bash
-npm run dev
-```
-
-Запуск проверки самого приложения:
-```bash
-docker compose up -d --build app
-```
-
-Для финальной проверки рекомендую:
-```bash
-docker compose down --rmi local --volumes
-docker compose up --build
-```
-
-PS: С наилучшими пожеланиями!
