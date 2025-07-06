@@ -4,13 +4,15 @@ import { google } from "googleapis";
 
 export const apiWB = axios.create({
   headers: {
-    "Authorization": env.WB_TOKEN,
-    "Content-Type": "application/json"
-  },
-  baseURL: env.WB_API_URL,
+    "Authorization": `Bearer ${env.WB_TOKEN}`,
+    "Content-Type": "application/json",
+  }
 });
 
 export const apiGoogle = new google.auth.GoogleAuth({
-  apiKey: env.GOOGLE_API_KEY,
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
-});
+  scopes: ["https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive",
+    "https://www.googleapis.com/auth/drive.file"
+  ],
+  credentials: JSON.parse(Buffer.from(env.GOOGLE_CREDENTIALS, "hex").toString())
+})

@@ -48,7 +48,7 @@ export class DBService {
     }
   }
 
-  async getActiveSpreadsheet() {
+  async getActiveSpreadsheet(): Promise<SpreadsheetDB | null> {
     try {
       return await knex('spreadsheets')
         .where('is_active', true)

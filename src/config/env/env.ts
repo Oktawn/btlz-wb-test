@@ -22,6 +22,7 @@ const envSchema = z.object({
     WB_TOKEN: z.string(),
     WB_API_URL: z.string(),
     GOOGLE_API_KEY: z.string(),
+    GOOGLE_CREDENTIALS: z.string(),
 });
 
 const env = envSchema.parse({
@@ -35,6 +36,7 @@ const env = envSchema.parse({
     WB_TOKEN: process.env.WB_TOKEN,
     WB_API_URL: process.env.WB_API_URL,
     GOOGLE_API_KEY: process.env.GOOGLE_API_KEY,
+    GOOGLE_CREDENTIALS: process.env.GOOGLE_CREDENTIALS,
 });
 
 export default env;
