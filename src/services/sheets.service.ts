@@ -32,12 +32,15 @@ export class SheetsService {
           console.error("No tariffs found for the given date.");
           return;
         }
+        const sortedData = data.sort((a, b) => {
+          return parseFloat(a.box_delivery_and_storage_expr) - parseFloat(b.box_delivery_and_storage_expr);
+        });
         await this.sheets.spreadsheets.values.update({
           spreadsheetId: spreadsheetId,
           range: `${sheetName}!A2:G`,
           valueInputOption: "RAW",
           requestBody: {
-            values: data.map((item) => [
+            values: sortedData.map((item) => [
               item.tariff_date,
               item.box_delivery_and_storage_expr,
               item.box_delivery_base,

@@ -37,7 +37,7 @@ export class ScheduleService {
     const timeout = setTimeout(() => {
       console.error('Fetch data operation timed out');
       throw new Error('Fetch data operation timed out');
-    }, 30000); // Увеличен до 30 секунд
+    }, 30000);
 
     try {
       const t = new Intl.DateTimeFormat('sv-SE').format(new Date());
@@ -56,7 +56,7 @@ export class ScheduleService {
   }
 
   startHourlySchedule() {
-    const jobHours = new CronJob('*/3 * * * *', async () => {
+    const jobHours = new CronJob('0 */1 * * *', async () => {
       await this.executeInQueue("Hourly task", async () => {
         await this.fetchData();
       });
@@ -70,7 +70,7 @@ export class ScheduleService {
   }
 
   startDailySchedule() {
-    const jobDaily = new CronJob('30 14 * * *', async () => {
+    const jobDaily = new CronJob('0 12 */1 * *', async () => {
       await this.executeInQueue('Daily task', async () => {
         await this.db.DeactiveSpreadsheet();
         await this.sheetService.createSpreadsheet();
